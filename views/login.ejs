@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('./partials/head') %>
+<body >
+
+    
+    <h1 style="font-weight: 800; font-size: 70px; text-align: center; "><span style="color:#f87902 ; ">Login</span></h1>
+        <div class="jumbotron jumbotron-fluid" style="background: white;">
+          <div class="row">
+
+            <div class="col-lg-6 col-md-12 col-sm-12" >
+              <img  src="/log.svg" alt="Picture" style=" display: block; margin-left: auto; margin-right: auto; width: 60%;">
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="jumbotron jumbotron " style="background: white;">
+
+
+                  
+                  <form action="/login" method="POST">
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Name</label>
+                      <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Password</label>
+                        <input type="password" class="form-control" name="password" id="exampleFormControlInput1" placeholder="Enter Your password" required>
+                      </div>
+                    <div class="form-group" style="text-align: center;">
+                        <button type="submit" class="btn btn-outline-dark" style="transition: 0.4s;">Submit</button>
+                        
+                        
+                      </div>
+                      <p>Not have an Account <a href="register">Register</a> Here</p>
+                  </form>
+
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

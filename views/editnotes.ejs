@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head') %>
+<body >
+
+  <%- include('./partials/nav') %>
+    
+   
+  <div class="row" style=" margin-top: 100px;">
+    <div class="col-lg-6 col-md-12 col-sm-12 sticky-top">
+      <div class="sticky-top">
+      <img  src="/add.svg" alt="Picture" style="  margin-top: 100px; display: block; margin-left: auto; margin-right: auto; width: 80%; ">
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+      <h1 style="color: black; text-align: center; margin-top: 20px; font-weight: 800;">Add New Notes </h1>
+      <div class="jumbotron" style="background-color: white;">
+        <div class="container">
+
+            <form action="/update/:<%=notes.id%>" method="PUT" enctype="multipart/form-data">
+
+            <div class="form-group">
+              <label for="title">Notes Name</label>
+              <input type="text" class="form-control" name="title" id="title" maxlength="20" value="<%=notes.title %>" placeholder="Enter Notes Topic Name | Length of title should be less than 20 characters" required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description-1</label>
+              <input type="text" class="form-control" name="description1"  minlength="40"  value="<%=notes.description1 %>" maxlength="50" placeholder="Enter Notes Description point-1 | Length of Description should be 50-100 characters " required>
+            </div>
+            <div class="form-group">
+              <label for="description">Description-2</label>
+              <input type="text" class="form-control" name="description2"  minlength="40" value="<%=notes.description2 %>" maxlength="50" placeholder="Enter Notes Description point-2 | Length of Description should be 50-100 characters " required>
+            </div>
+            <div class="form-group">
+              <label for="name">Contributer name</label>
+              <input type="text" class="form-control" name="name" maxlength="20" value="<%=notes.name %>" placeholder="Enter Contributer Name / Type anonymous " required>
+            </div>
+            <div class="form-group">
+              <input type="hidden" class="form-control" value="<%=notes.document %>" name="doc" required>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <button type="submit" class="btn btn-outline-dark">Submit</button>
+            </div>
+            
+          </form>
+
+
+        </div>
+    </div>
+
+    </div>
+  </div>
+
+
+
+  <%- include('./partials/footer') %>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
