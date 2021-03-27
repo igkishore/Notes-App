@@ -165,7 +165,7 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'), (req, res) => {
 
 app.get('/uploads/:docname',ensureAuthenticated,(req,res) =>{
   var file_name = req.params.docname
-  var render_file = "\\uploads\\" + (file_name);
+  var render_file = "/uploads/" + (file_name);
 
   console.log(__dirname+render_file)
     fs.readFile(__dirname + render_file , function (err,data){
