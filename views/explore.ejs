@@ -6,20 +6,29 @@
     
   <%- include('./partials/nav') %>
 
-  <h1 style="text-align: center; font-weight: 800; margin-top: 150px; text-transform: capitalize;"> &spades; View All available Notes &spades;</h1>
+  <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255, 196, 0, 0.123); margin-top: 40px;">
+    <div class="container">
+      <h1 class="zoom" style="text-align: center; font-weight: 800; text-transform: capitalize;"> &spades; View All available Notes &spades;</h1>
+    </div>
+    </div>
+</div>
 
-  <div class="jumbotron" style="padding: 70px; margin-top: 150px; background-color: white;" >
+ 
+
+  <div class="jumbotron" style="padding: 70px; margin-top: 50px; background-color: white;" >
     <div class="row">
     <% if (notes.length > 0) { %>
       <% notes.forEach(pp => { %>
-          <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="jumbotron" style="background-color: rgba(255, 174, 0, 0.753);">
+          <div class="col-lg-6 col-md-6 col-sm-12 ">
+            <div class="jumbotron zoom2" style="background-color: rgba(255, 174, 0, 0.829);">
               <div class="container-fluid">
                 <h2 style="text-align: center; text-transform: capitalize; color: rgb(0, 0, 0); font-weight: 800;">
                   <%= pp.title %> 
                 </h2>
                   <p style="text-align: right; color: rgb(0, 0, 0);"> - <%= pp.name %> </p>
-                  <h6><%= pp.description %> </h6>
+                  <h6><%= pp.description1 %> </h6>
+                  <br>
+                  <h6><%= pp.description2 %> </h6>
                 <br>
                 <div>
                 <a href="../uploads/<%=pp.document%>"><button type="submit" class="btn btn-outline-dark" style="transition: 0.4s; margin-right:30px ; margin-left: 50px;" >View Pdf</button></a>

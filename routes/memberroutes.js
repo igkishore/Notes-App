@@ -8,7 +8,7 @@ router.get('/dashboard',ensureAuthenticated, memberController.dashboard_get);
 router.get('/addnotes',ensureAuthenticated, memberController.addnotes_get);
 router.get('/explore',ensureAuthenticated, memberController.explore_get);
 router.get('/newnotes',ensureAuthenticated, memberController.newnotes_get);
-router.delete('/:id',ensureAuthenticated,memberController.delete_notes);
+
 
 
 

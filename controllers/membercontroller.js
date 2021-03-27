@@ -1,5 +1,6 @@
 const notes_db = require('../models/model.notes');
 const passport = require('../passport');
+const fs = require('fs')
 
 const dashboard_get = (req,res) =>{
     var user_id  = req.session.passport.user;
@@ -32,33 +33,12 @@ const newnotes_get = (req,res) =>{
     res.render('newnotes');
 }
 
-const delete_notes = (req,res) =>{
-  const user_id = req.session.passport.user;
-  const notes_id = req.params.id;
-  notes_db.findById(notes_id)
-  .then(result =>{
-    if(result.contributer_id==user_id){
-      notes_db.findByIdAndDelete(notes_id)
-      .then(result => {
-    
-        res.json({ redirect: '/' });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
-  })
-  .catch(err => {
-    console.log(err);
-  });
- 
-}
+
 
 
 module.exports = {
     dashboard_get,
     addnotes_get,
     explore_get,
-    newnotes_get,
-    delete_notes
+    newnotes_get
 }

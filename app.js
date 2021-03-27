@@ -186,6 +186,36 @@ app.delete('/delete/:id',(req,res)=>{
   });
 })*/
 
+
+app.delete('/:id',ensureAuthenticated,(req,res)=>{
+
+  const user_id = req.session.passport.user;
+  const notes_id = req.params.id;
+  notes_db.findById(notes_id)
+  .then(result =>{
+    if(result.contributer_id==user_id){
+     const path = __dirname + "/uploads/" + result.document;
+     try{
+       fs.unlinkSync(path);
+     }
+     catch(err){
+       console.log(err);
+     }
+      notes_db.findByIdAndDelete(notes_id)
+      .then(result => {
+    
+        res.json({ redirect: '/' });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  });
+});
+
 // Member Notes
 app.use('/',memberRoutes);
 
