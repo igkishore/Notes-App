@@ -124,7 +124,7 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'), (req, res) => {
       }
     });
   })
-
+/*
   app.get('/update/:id',(req,res) =>{
     const notes_id = req.params.id;
     notes_db.findById(notes_id)
@@ -160,7 +160,7 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'), (req, res) => {
      })
   })
    
-
+*/
 // Getting Pdfs 
 
 app.get('/uploads/:docname',ensureAuthenticated,(req,res) =>{
