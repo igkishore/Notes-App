@@ -167,7 +167,7 @@ app.get('/uploads/:docname',ensureAuthenticated,(req,res) =>{
   var file_name = req.params.docname
   var render_file = "/uploads/" + (file_name);
 
-  console.log(__dirname+render_file)
+
     fs.readFile(__dirname + render_file , function (err,data){
         res.contentType("application/pdf");
         res.send(data);
@@ -191,6 +191,7 @@ app.delete('/:id',ensureAuthenticated,(req,res)=>{
 
   const user_id = req.session.passport.user;
   const notes_id = req.params.id;
+
   notes_db.findById(notes_id)
   .then(result =>{
     if(result.contributer_id==user_id){
