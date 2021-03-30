@@ -257,7 +257,7 @@ app.get('/uploads/:docname',(req,res) =>{
 })*/
 
 
-app.delete('/:id',(req,res)=>{
+app.delete('/:id',ensureAuthenticated,(req,res)=>{
 
   const user_id = req.session.passport.user;
   const notes_id = req.params.id;
