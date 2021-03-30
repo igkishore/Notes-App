@@ -56,7 +56,7 @@ var storage = multer.diskStorage({
 		cb(null, 'uploads')
 	},
 	filename: (req, file, cb) => {
-    pdf_file_name = 'hi' + '.pdf';
+    pdf_file_name = uuidv4() + '.pdf';
 		cb(null, pdf_file_name)
 
 	}
@@ -128,7 +128,7 @@ app.post('/register',(req,res)=>{
 
 app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
   var id = '',link='';
-  const file_path = __dirname + "\\uploads\\" + pdf_file_name;
+  const file_path = "uploads/" + pdf_file_name;
   async function uploadfile(){
     try
     {
