@@ -135,11 +135,11 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
       const response = await drive.files.create({
         requestBody:{
           name: pdf_file_name,
-          mimeType: 'document/pdf',
+          mimeType: 'application/pdf',
         },
         media:
         {
-          mimeType:'document/pdf',
+          mimeType:'application/pdf',
           body: fs.createReadStream(file_path),
         },
       })
