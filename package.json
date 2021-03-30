@@ -18,11 +18,13 @@
     "express-session": "^1.17.1",
     "flash": "^1.1.0",
     "fs": "0.0.1-security",
+    "googleapis": "^68.0.0",
     "mongoose": "^5.11.11",
     "multer": "^1.4.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "session": "^0.1.0"
+    "session": "^0.1.0",
+    "uuid": "^8.3.2"
   }
 }

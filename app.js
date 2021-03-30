@@ -9,6 +9,26 @@ const { ensureAuthenticated } = require('./auth');
 require('./passport')(passport);
 const memberRoutes = require("./routes/memberroutes")
 const fs = require('fs');
+const {google} = require('googleapis');
+const { v4: uuidv4 } = require('uuid');
+
+
+// Google drive apis 
+const CLIENT_ID = '378599184829-ijl9vpr5t16lk0mado85bdsclkt58lcn.apps.googleusercontent.com';
+const CLIENT_SECRET = 'rLYy5k3bpWP6ytgusTgNU1VO';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_URI = '1//04OrSR0XznbjoCgYIARAAGAQSNwF-L9IrVJEyn8XVr2CK6uHrtpdKwkF7CVeDdyxt8gYS_5agm13pcLbbBOrSARaUjAavgLkGOOU';
+const oauth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+ oauth2Client.setCredentials({refresh_token:REFRESH_URI});
+
+ const drive = google.drive({
+   version:'v3',
+   auth:oauth2Client
+ });
 
 //Express App
 const app = express();
@@ -36,8 +56,8 @@ var storage = multer.diskStorage({
 		cb(null, 'uploads')
 	},
 	filename: (req, file, cb) => {
-    pdf_file_name=Date.now();
-		cb(null, file.fieldname + '-' + Date.now() + '.pdf')
+    pdf_file_name = uuidv4() + '.pdf';
+		cb(null, pdf_file_name)
 
 	}
 });
@@ -106,23 +126,85 @@ app.post('/register',(req,res)=>{
 
 // Ading Notes
 
-app.post("/newnotes",ensureAuthenticated, upload.single('doc'), (req, res) => {
+app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
+  var id = '',link='';
+  const file_path = __dirname + "/uploads/" + pdf_file_name;
+  async function uploadfile(){
+    try
+    {
+      const response = await drive.files.create({
+        requestBody:{
+          name: pdf_file_name,
+          mimeType: 'image/pdf',
+        },
+        media:
+        {
+          mimeType:'image/pdf',
+          body: fs.createReadStream(file_path),
+        },
+      })
+      id = response.data.id;
+      //console.log(id);
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+  }
+  uploadfile()
+  .then(result => {
+     try{
+       fs.unlinkSync(file_path);
+     }
+     catch(err){
+       console.log(err);
+     }
+    async function generateurl()
+    {
+      try{
+        const file_id  = id;
+        await drive.permissions.create({
+          fileId:file_id,
+          requestBody:{
+            role:'reader',
+            type:'anyone',
+          },
+      });
+
+        const result = await drive.files.get({
+        fileId:file_id,
+        fields:'webViewLink,webContentLink',
+      });
+      link=result.data.webViewLink;
+      //console.log(result.data);
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+  }
+  generateurl()
+  .then(result=>{
     var obj = {
-        title: req.body.title,
-        description1: req.body.description1,
-        description2: req.body.description2,
-        name: req.body.name,
-        contributer_id:req.session.passport.user,
-        document: 'doc' + '-' + pdf_file_name + '.pdf' 
+      title: req.body.title,
+      description1: req.body.description1,
+      description2: req.body.description2,
+      name: req.body.name,
+      contributer_id:req.session.passport.user,
+      document_id: id,
+      document_url:link,
     }
     notes_db.create(obj, (err, item) => {
-      if (err) {
-        console.log(err);
-      }
-      else {
-        res.redirect('/');
-      }
-    });
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.redirect('/');
+    }
+  });
+
+  })
+  })
   })
 /*
   app.get('/update/:id',(req,res) =>{
@@ -162,8 +244,8 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'), (req, res) => {
    
 */
 // Getting Pdfs 
-
-app.get('/uploads/:docname',ensureAuthenticated,(req,res) =>{
+/*
+app.get('/uploads/:docname',(req,res) =>{
   var file_name = req.params.docname
   var render_file = "/uploads/" + (file_name);
 
@@ -172,22 +254,10 @@ app.get('/uploads/:docname',ensureAuthenticated,(req,res) =>{
         res.contentType("application/pdf");
         res.send(data);
     });
-})
-/*
-app.delete('/delete/:id',(req,res)=>{
-  const user_id = req.session.passport.user;
-  const notes_id = req.params.id;
-  notes_db.findByIdAndDelete(notes_id)
-  .then(result => {
-    res.json({ redirect: '/' });
-  })
-  .catch(err => {
-    console.log(err);
-  });
 })*/
 
 
-app.delete('/:id',ensureAuthenticated,(req,res)=>{
+app.delete('/:id',(req,res)=>{
 
   const user_id = req.session.passport.user;
   const notes_id = req.params.id;
@@ -195,16 +265,22 @@ app.delete('/:id',ensureAuthenticated,(req,res)=>{
   notes_db.findById(notes_id)
   .then(result =>{
     if(result.contributer_id==user_id){
-     const path = __dirname + "/uploads/" + result.document;
-     try{
-       fs.unlinkSync(path);
-     }
-     catch(err){
-       console.log(err);
-     }
+     /**/
+        async function deletefile()
+          {
+            try{
+              const responce = await drive.files.delete({
+              fileId : result.document_id
+            });
+          }
+          catch(err)
+          {
+            console.log(err);
+          }
+          }
+        deletefile();
       notes_db.findByIdAndDelete(notes_id)
       .then(result => {
-    
         res.json({ redirect: '/' });
       })
       .catch(err => {
