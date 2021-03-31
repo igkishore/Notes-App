@@ -194,12 +194,12 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
   }
   uploadfile()
   .then(result => {
-    /* try{
+    try{
        fs.unlinkSync(file_path);
      }
      catch(err){
        console.log(err) ;
-     }*/
+     }
     async function generateurl()
     {
       try{
