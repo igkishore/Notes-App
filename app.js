@@ -169,7 +169,7 @@ app.post('/register',(req,res)=>{
 
 app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
   var id = '',link='';
-  const file_path = 'uploads/hi.pdf';
+  const file_path = 'uploads/'+pdf_file_name;
   async function uploadfile(){
     try
     {
