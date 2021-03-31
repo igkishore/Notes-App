@@ -12,11 +12,12 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
+//console.log(process.env);
 
 // Google drive apis 
 const CLIENT_ID = process.env.CLIENT_ID_URL;
 const CLIENT_SECRET = process.env.CLIENT_SECRET_URL;
-const REDIRECT_URI = process.env.REDIRECT_URI_URL;
+const REDIRECT_URI =process.env.REDIRECT_URI_URL;
 const REFRESH_URI = process.env.REFRESH_URI_URL;
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
@@ -258,7 +259,6 @@ app.get('/uploads/:docname',(req,res) =>{
 
 
 app.delete('/:id',ensureAuthenticated,(req,res)=>{
-
   const user_id = req.session.passport.user;
   const notes_id = req.params.id;
 
