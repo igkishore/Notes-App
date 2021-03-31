@@ -11,13 +11,13 @@ const memberRoutes = require("./routes/memberroutes")
 const fs = require('fs');
 const {google} = require('googleapis');
 const { v4: uuidv4 } = require('uuid');
-
+require('dotenv').config();
 
 // Google drive apis 
-const CLIENT_ID = '378599184829-ijl9vpr5t16lk0mado85bdsclkt58lcn.apps.googleusercontent.com';
-const CLIENT_SECRET = 'rLYy5k3bpWP6ytgusTgNU1VO';
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_URI = '1//04OrSR0XznbjoCgYIARAAGAQSNwF-L9IrVJEyn8XVr2CK6uHrtpdKwkF7CVeDdyxt8gYS_5agm13pcLbbBOrSARaUjAavgLkGOOU';
+const CLIENT_ID = process.env.CLIENT_ID_URL;
+const CLIENT_SECRET = process.env.CLIENT_SECRET_URL;
+const REDIRECT_URI = process.env.REDIRECT_URI_URL;
+const REFRESH_URI = process.env.REFRESH_URI_URL;
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
@@ -37,7 +37,7 @@ var port = (process.env.PORT || 3000);
 //Data Base
 const password_db = require('./models/model.password');
 const notes_db = require('./models/model.notes');
-const dburl = "mongodb+srv://gowtham:test1234@main.l0g6f.mongodb.net/notesapp_db?retryWrites=true&w=majority";
+const dburl = process.env.DB_URL;
 mongoose.connect(dburl,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true })
 .then(result=> app.listen(port))
 .catch(err=>console.log(err));
