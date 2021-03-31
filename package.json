@@ -19,6 +19,7 @@
     "flash": "^1.1.0",
     "fs": "0.0.1-security",
     "googleapis": "^68.0.0",
+    "mailgun-js": "^0.22.0",
     "mongoose": "^5.11.11",
     "multer": "^1.4.2",
     "passport": "^0.4.1",

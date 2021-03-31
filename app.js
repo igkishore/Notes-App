@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser=require('body-parser');
 const bcrypt = require('bcrypt');
-const flash  =require('connect-flash');
 const session = require('express-session');
 const passport = require('passport'); 
 const { ensureAuthenticated } = require('./auth');
@@ -12,6 +11,8 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
+const flash = require('connect-flash');
+//const mailgun = require('mailgun-js');
 //console.log(process.env);
 
 // Google drive apis 
@@ -78,32 +79,68 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// Authentication
+//Mail 
+/*
+var API_KEY = '61118d30e9bdc7c96107a6fa42a4a11c-b6d086a8-e70422b3';
+var DOMAIN = 'sandbox89d7d6f1089b428d8e4a94b168f9c518.mailgun.org';
+const mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
+  
+sendMail = function(sender_email, reciever_email,
+         email_subject, email_body){
+  
+  const data = {
+    "from": sender_email,
+    "to": reciever_email,
+    "subject": email_subject,
+    "text": email_body
+  };
+    
+  mailgun.messages().send(data, (error, body) => {
+    if(error) console.log(error)
+    else console.log(body);
+  });
+}
+  
+var sender_email = 'gow <gowthamkishoreindukuri@gmail.com>'
+var receiver_email = 'gowthamkishoreindukuri@gmail.com'
+var email_subject = 'Mailgun Demo'
+var email_body = 'Greetings from geeksforgeeks'
+  
+// User-defined function to send email
+sendMail(sender_email, receiver_email, 
+            email_subject, email_body)
 
+*/
+
+
+
+// Authentication
 app.get('/login',(req,res)=>{
-  res.render('login');
+  const error = req.flash().error  || [];
+  res.render('login',{error})
 })
 
 app.post('/login',(req,res,next) => {
+
     passport.authenticate('local',{
 
       successRedirect:'dashboard',
       failureRedirect:'login',
-      failureFlash:true
+      failureFlash: 'Invalid Username or password'
     }) (req,res,next);
 })
 
 app.get('/register',(req,res)=>{
-    res.render('register');
+    res.render('register',{error:''});
 })
 
 app.post('/register',(req,res)=>{
         if(req.body.password1!=req.body.password2)
         {
-            res.redirect('register');
+            res.render('register',{error : 'Password did not match'});
         }
         else{
-      const newuser = new password_db( {name:req.body.name , password:req.body.password1});
+      const newuser = new password_db( {name:req.body.name ,email:req.body.mail, password:req.body.password1});
       bcrypt.genSalt(10,(err,salt) =>
         bcrypt.hash(newuser.password,salt,(err,hash) =>
         {
@@ -114,7 +151,10 @@ app.post('/register',(req,res)=>{
             {
               res.redirect('/login')
             })
-          .catch(err => console.log(err));
+          .catch(err => {
+            res.render('register',{error : 'Username Already Exists'});
+            //console.log(err);
+          });
         })
       )
     }
@@ -154,12 +194,12 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
   }
   uploadfile()
   .then(result => {
-    /* try{
+     try{
        fs.unlinkSync(file_path);
      }
      catch(err){
        console.log(err);
-     }*/
+     }
     async function generateurl()
     {
       try{
