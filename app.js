@@ -79,40 +79,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-//Mail 
-/*
-var API_KEY = '61118d30e9bdc7c96107a6fa42a4a11c-b6d086a8-e70422b3';
-var DOMAIN = 'sandbox89d7d6f1089b428d8e4a94b168f9c518.mailgun.org';
-const mailgun = require('mailgun-js')({apiKey: API_KEY, domain: DOMAIN});
-  
-sendMail = function(sender_email, reciever_email,
-         email_subject, email_body){
-  
-  const data = {
-    "from": sender_email,
-    "to": reciever_email,
-    "subject": email_subject,
-    "text": email_body
-  };
-    
-  mailgun.messages().send(data, (error, body) => {
-    if(error) console.log(error)
-    else console.log(body);
-  });
-}
-  
-var sender_email = 'gow <gowthamkishoreindukuri@gmail.com>'
-var receiver_email = 'gowthamkishoreindukuri@gmail.com'
-var email_subject = 'Mailgun Demo'
-var email_body = 'Greetings from geeksforgeeks'
-  
-// User-defined function to send email
-sendMail(sender_email, receiver_email, 
-            email_subject, email_body)
-
-*/
-
-
 
 // Authentication
 app.get('/login',(req,res)=>{
