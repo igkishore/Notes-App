@@ -59,14 +59,16 @@
                       <% if (notes.length> 0) { %>
                                                     <% notes.forEach(pp=> { %>
                                                               <div class="col-lg-3 col-md-6 col-sm-12">
-                                                                <div class="card zoom" style="width: 18rem; background-color: rgba(238, 135, 0, 0.74);" ;">
+                                                                <div class="card zoom" style="width: 18rem; background-color: rgb(255, 145, 0);" >
                                                                   <div class="card-body">
                                                                     <h4 class="card-title">
                                                                       <%= pp.title %>
                                                                     </h4>
+                                                                    
                                                                     <a href="<%=pp.document_url%>"><button type="submit" class="btn btn-outline-dark"
                                                                         style="transition: 0.4s; margin-right:20px ; margin-left: 30px;">View
                                                                         PDF</button></a>
+                                                                        
                                                                   </div>
                                                                 </div>
                                                               </div>
