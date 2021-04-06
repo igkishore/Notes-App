@@ -30,7 +30,7 @@ const notesschema = new Schema({
     document_url:
     {
         type:String,
-        //required:true,
+        required:true,
     }
 });
 const notes = mongoose.model('notes',notesschema);
