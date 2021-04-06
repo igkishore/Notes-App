@@ -16,9 +16,12 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="jumbotron jumbotron " style="background: white;">
 
+                  
 
                   <% if (error!='') { %>
-                    <div class="p-3 mb-2 bg-danger text-white">&empty; <%=error%></div>
+                    <div class="alert alert-danger" role="alert">
+                      &empty; <%=error%>
+                    </div>
                     <%}%>
                   <form action="/login" method="POST">
                     <div class="form-group">

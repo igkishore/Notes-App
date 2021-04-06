@@ -11,6 +11,7 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
+const morgan = require('morgan');
 const flash = require('connect-flash');
 //const mailgun = require('mailgun-js');
 //console.log(process.env);
@@ -69,6 +70,7 @@ var upload = multer({ storage: storage });
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(session({
   secret: 'gowtham',
   resave: true,
@@ -194,9 +196,8 @@ app.post("/newnotes",ensureAuthenticated, upload.single('doc'),(req, res) => {
   .then(result=>{
     var obj = {
       title: req.body.title,
-      description1: req.body.description1,
-      description2: req.body.description2,
-      name: req.body.name,
+      type: req.body.type,
+      domain: req.body.domain,
       contributer_id:req.session.passport.user,
       document_id: id,
       document_url:link,

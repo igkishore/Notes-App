@@ -6,15 +6,11 @@ const notesschema = new Schema({
         type:String,
         required:true,
     },
-    description1:{
+    type:{
         type:String,
         required:true,
     },
-    description2:{
-        type:String,
-        required:true,
-    },
-    name:{
+    domain:{
         type:String,
         required:true,
     },
@@ -32,6 +28,7 @@ const notesschema = new Schema({
         type:String,
         required:true,
     }
-});
+
+},{ timestamps: true });
 const notes = mongoose.model('notes',notesschema);
 module.exports = notes;

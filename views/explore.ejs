@@ -1,55 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('./partials/head') %>
-<body >
+<%- include('./partials/head') %>
 
-    
-  <%- include('./partials/nav') %>
+  <body>
 
-  <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255, 196, 0, 0.123); margin-top: 40px;">
-    <div class="container">
-      <h1 class="zoom" style="text-align: center; font-weight: 800; text-transform: capitalize;"> &star; View All available Notes &star;</h1>
-    </div>
-    </div>
-</div>
+
+    <%- include('./partials/nav') %>
+
+      <div class="jumbotron jumbotron-fluid" style="background-color: rgba(255, 196, 0, 0.123); margin-top: 40px;">
+        <div class="container">
+          <h1 class="zoom" style="text-align: center; font-weight: 800; text-transform: capitalize;"> &star; View All
+            available Notes &star;</h1>
+        </div>
+      </div>
+      </div>
+
+      <div class="container">
+
+        <form class="form-inline" action="/explore" method="POST">
+          <div class="form-group">
+            <label for="title">Notes Type</label>
+            <select name="type" class="form-control form-control-lg">
+              <option>All</option>
+              <option>Note Book</option>
+              <option>Text Book</option>
+              <option>Sample or previous year paper</option>
+              <option>Cheet Sheet</option>
+              <option>Others</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+
+            <label for="title">Notes Domain</label>
+            <select name="domain" class="form-control form-control-lg">
+              <option>All</option>
+              <option>Aero Space Engineering</option>
+              <option>Chemical Engineering</option>
+              <option>Bio technology</option>
+              <option>Computer Science Engineering</option>
+              <option>Electronics and communications</option>
+              <option>Electrical and Electronics Engineering</option>
+              <option>Mechanical Engineering</option>
+              <option>Information Technology</option>
+              <option>Others</option>
+            </select>
+          </div>
+          <div class="form-group" style="text-align: center;">
+            <button type="submit" class="btn btn-outline-dark">Submit</button>
+          </div>
+        </form>
+
+      </div>
+      <div class="jumbotron jumbotron-fluid" style="background-color: white;">
+        <div class="container-fluid">
+          <div class="row">
+            <% if(category1=="ALL" || category2=="ALL" ) {%>
+                      <% if (notes.length> 0) { %>
+                                                    <% notes.forEach(pp=> { %>
+                                                              <div class="col-lg-3 col-md-6 col-sm-12">
+                                                                <div class="card zoom" style="width: 18rem; background-color: rgba(238, 135, 0, 0.74);" ;">
+                                                                  <div class="card-body">
+                                                                    <h4 class="card-title">
+                                                                      <%= pp.title %>
+                                                                    </h4>
+                                                                    <a href="<%=pp.document_url%>"><button type="submit" class="btn btn-outline-dark"
+                                                                        style="transition: 0.4s; margin-right:20px ; margin-left: 30px;">View
+                                                                        PDF</button></a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                      <% }) %>
+                            <% } %>
+              <% } else {%>
+
+                <% if (notes.length> 0) { %>
+                  <% notes.forEach(pp=> { %>
+                    <% if (pp.type == category1 && pp.domain == category2 ) { %>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                              <div class="card zoom2" style="width: 18rem; background-color: rgba(255, 174, 0, 0.829);" ;">
+                                <div class="card-body">
+                                  <h4 class="card-title">
+                                    <%= pp.title %>
+                                  </h4>
+                                  <a href="<%=pp.document_url%>"><button type="submit" class="btn btn-outline-dark"
+                                      style="transition: 0.4s; margin-right:20px ; margin-left: 30px;">View
+                                      PDF</button></a>
+                                </div>
+                              </div>
+                            </div>
+                            <%}%>
+                    <% }) %>
+                    <% } else { %>
+                      <p style="text-align: center; font-weight: 800; "><span
+                          style="text-align:center">There
+                          are no Notes to display :( </span></p>
+                <% } %>
+
+
+                <% } %> 
+
+          </div>
+        </div>  
+      </div>
+
+      <br>
+      <br>
+      <br>
 
  
 
-  <div class="jumbotron" style="padding: 70px; margin-top: 50px; background-color: white;" >
-    <div class="row">
-    <% if (notes.length > 0) { %>
-      <% notes.forEach(pp => { %>
-          <div class="col-lg-6 col-md-6 col-sm-12 ">
-            <div class="jumbotron zoom2" style="background-color: rgba(255, 174, 0, 0.829);">
-              <div class="container-fluid">
-                <h2 style="text-align: center; text-transform: capitalize; color: rgb(0, 0, 0); font-weight: 800;">
-                  <%= pp.title %> 
-                </h2>
-                  <p style="text-align: right; color: rgb(0, 0, 0);"> - <%= pp.name %> </p>
-                  <h6><%= pp.description1 %> </h6>
-                  <br>
-                  <h6><%= pp.description2 %> </h6>
-                <br>
-                <div>
-                <a href="<%=pp.document_url%>"><button type="submit" class="btn btn-outline-dark" style="transition: 0.4s; margin-right:30px ; margin-left: 50px;" >View Pdf</button></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% }) %>
-        <% } else { %>
-          <p style="text-align: center; font-weight: 800; "><span style="text-align:center">There are no Notes to display :( </span></p>
-        <% } %>
-    </div>
-</div>
 
 
 
-  <%- include('./partials/footer') %>
+
+      <%- include('./partials/footer') %>
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+  </body>
+
 </html>

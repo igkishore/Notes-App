@@ -17,16 +17,18 @@
 
 
                   <% if (error!='') { %>
-                    <div class="p-3 mb-2 bg-danger text-white"> &empty;<%=error%></div>
+                    <div class="alert alert-danger" role="alert">
+                      &empty; <%=error%>
+                    </div>
                     <%}%>
                   <form action="/register" method="POST">
                     <div class="form-group">
                       <label for="exampleFormControlInput1">Name</label>
-                      <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Enter Your Name" required>
+                      <input type="text" class="form-control" name="name" minlength="10" id="exampleFormControlInput1" placeholder="Enter Your Name" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Email</label>
-                        <input type="text" class="form-control" name="mail" id="exampleFormControlInput1" placeholder="Enter Your Mail ID" required>
+                        <input type="email" class="form-control" name="mail" id="exampleFormControlInput1" placeholder="Enter Your Mail ID" required>
                       </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Password</label>
