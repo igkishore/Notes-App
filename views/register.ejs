@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include('./partials/head') %>
-<body >
+<style>
+   *{
+      overflow-x:hidden;
+    }
+</style>
+<body>
 
     
-    <h1 style="font-weight: 800; font-size: 70px; text-align: center; "><span style="color:#f87902 ; ">Note's App</span></h1>
-        <div class="jumbotron jumbotron-fluid" style="background: white;">
+    <h1 style="font-weight: 800; font-size: 70px; text-align: center;overflow:hidden; "><span style="color:#f87902 ; ">Note's App</span></h1>
+        <div class="jumbotron jumbotron-fluid" style="background: white;padding:64px 0 0 0; margin:0px">
           <div class="row">
 
             <div class="col-lg-6 col-md-12 col-sm-12" >
@@ -13,9 +18,9 @@
             </div>
 
             <div class="col-lg-6 col-md-12 col-sm-12">
-                <div class="jumbotron jumbotron " style="background: white;">
+                <div class="jumbotron jumbotron " style="background: white;margin:0px;padding:64px 32px 0 32px;">
 
-                  <h2 style="font-weight: 800; text-align: center; text-transform: uppercase;">Register</h2>
+                  <h2 style="font-weight: 800; text-align: center; text-transform: uppercase;overflow:hidden;">Register</h2>
 
                   <% if (error!='') { %>
                     <div class="alert alert-danger" role="alert">
